@@ -31,25 +31,30 @@ version >=v7.14.0 of Concourse, you can visit [http://localhost:8080/download-fl
 
 Otherwise, you can follow these steps to install fly for your OS:
 
-``` sh title="Linux" linenums="1"
-curl 'http://localhost:8080/api/v1/cli?arch=amd64&platform=linux' -o fly
-chmod +x ./fly
-mv ./fly /usr/local/bin/
-```
+=== "Linux"
 
-``` sh title="MacOS" linenums="1"
-curl 'http://localhost:8080/api/v1/cli?arch=amd64&platform=darwin' -o fly
-chmod +x ./fly
-mv ./fly /usr/local/bin/
-```
+    ``` sh linenums="1"
+    curl 'http://localhost:8080/api/v1/cli?arch=amd64&platform=linux' -o fly
+    chmod +x ./fly
+    mv ./fly /usr/local/bin/
+    ```
 
-``` ps1 title="Windows (Powershell)" linenums="1"
-$concoursePath = 'C:\concourse\'
-mkdir $concoursePath
-[Environment]::SetEnvironmentVariable('PATH', "$ENV:PATH;${concoursePath}", 'USER')
-$concourseURL = 'http://localhost:8080/api/v1/cli?arch=amd64&platform=windows'
-Invoke-WebRequest $concourseURL -OutFile "${concoursePath}\fly.exe"
-```
+=== "MacOS"
+
+    ``` sh linenums="1"
+    curl 'http://localhost:8080/api/v1/cli?arch=amd64&platform=darwin' -o fly
+    chmod +x ./fly
+    mv ./fly /usr/local/bin/
+    ```
+=== "Windows (Powershell)"
+
+    ``` ps1 linenums="1"
+    $concoursePath = 'C:\concourse\'
+    mkdir $concoursePath
+    [Environment]::SetEnvironmentVariable('PATH', "$ENV:PATH;${concoursePath}", 'USER')
+    $concourseURL = 'http://localhost:8080/api/v1/cli?arch=amd64&platform=windows'
+    Invoke-WebRequest $concourseURL -OutFile "${concoursePath}\fly.exe"
+    ```
 
 Use [fly login](https://concourse-ci.org/fly.html#fly-login) to log into your local Concourse as the `test` user:
 

@@ -1,6 +1,9 @@
 site_name: Concourse Docs
 site_url: https://concourse-ci.org/
 
+repo_url: https://github.com/kcbimonte/concourse-docs
+repo_name: kbimonte/concourse-docs
+
 markdown_extensions:
   - admonition
   - pymdownx.details
@@ -11,6 +14,11 @@ markdown_extensions:
       pygments_lang_class: true
   - pymdownx.inlinehilite
   - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
 
 theme:
   name: material
