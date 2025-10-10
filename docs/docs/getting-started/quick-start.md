@@ -22,7 +22,7 @@ Creating docs_concourse_1 ... done
 Concourse will be running at [localhost:8080](http://localhost:8080/) on your machine. You can log in with the
 username/password as `test`/`test`.
 
-![Concourse Landing Page](assets/landing-page.png)
+![Concourse Landing Page](assets/welcome-screen.png)
 
 ## Install Fly
 
