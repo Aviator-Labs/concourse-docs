@@ -25,7 +25,7 @@ the job.
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 resources:
   - name: golang-1.20.x-image

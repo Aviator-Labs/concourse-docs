@@ -22,7 +22,7 @@ disable parallel job runs.
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 jobs:
   # Try to trigger the job multiple times and see what happens

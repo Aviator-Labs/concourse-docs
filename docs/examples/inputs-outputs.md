@@ -25,7 +25,7 @@ via [Resources](https://concourse-ci.org/resources.html).
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 jobs:
   - name: create-and-consume

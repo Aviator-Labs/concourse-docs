@@ -15,7 +15,7 @@ A job can be triggered by a resource. After it's complete, the next job can run 
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 resources:
   - name: every-30s

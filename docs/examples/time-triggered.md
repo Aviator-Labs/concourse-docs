@@ -17,7 +17,7 @@ The [`time` resource](https://github.com/concourse/time-resource) can be used to
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 resources:
   - name: every-30s

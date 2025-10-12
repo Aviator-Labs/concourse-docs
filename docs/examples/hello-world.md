@@ -20,7 +20,7 @@ the system to check and resolve, this is often used to test overall system healt
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 jobs:
   - name: job

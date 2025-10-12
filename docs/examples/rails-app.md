@@ -15,7 +15,7 @@ You can run the tests for a Rails that requires a specific version of ruby and r
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 resources:
   - name: rails-contributors-git

@@ -17,7 +17,7 @@ You can use params in a pipelines configuration file.
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 jobs:
   - name: ((first))-job
@@ -48,7 +48,7 @@ jobs:
 
 ## Variables
 
-```yaml
+```yaml linenums="1"
 ---
 first: initial
 number: "9000"

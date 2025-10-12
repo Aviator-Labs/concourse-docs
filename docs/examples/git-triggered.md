@@ -17,7 +17,7 @@ The [`git` resource](https://github.com/concourse/git-resource) can be used to t
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 resources:
   - name: concourse-docs-git

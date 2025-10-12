@@ -15,7 +15,7 @@ You can run the tests for a PHP application.
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 resources:
   - name: laravel-git

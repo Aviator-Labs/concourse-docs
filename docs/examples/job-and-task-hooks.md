@@ -17,7 +17,7 @@ the success, failure, or abortion of a job.
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 task-config: &task-config
   platform: linux

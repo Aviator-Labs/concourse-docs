@@ -15,7 +15,7 @@ You can run the tests for a Nodejs application.
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 resources:
   - name: repo

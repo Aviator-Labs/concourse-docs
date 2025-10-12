@@ -15,7 +15,7 @@ You can set a static set of pipelines from another pipeline on the same team.
 
 ## Pipeline Configuration
 
-```yaml
+```yaml linenums="1"
 ---
 resources:
   - name: concourse-examples
