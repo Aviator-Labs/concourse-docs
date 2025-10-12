@@ -1,5 +1,7 @@
 ---
 title: Serial job example
+hide:
+  - toc
 ---
 
 Setting the [`job.serial`](https://concourse-ci.org/jobs.html#schema.job.serial) flag restricts a job to run one build

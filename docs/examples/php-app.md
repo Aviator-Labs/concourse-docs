@@ -1,5 +1,7 @@
 ---
 title: PHP application testing example
+hide:
+  - toc
 ---
 
 You can run the tests for a PHP application.

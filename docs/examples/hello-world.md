@@ -1,5 +1,7 @@
 ---
 title: Hello World pipeline
+hide:
+  - toc
 ---
 
 A single job is the simplest form of pipeline.

@@ -1,5 +1,7 @@
 ---
 title: Pipeline ((vars)) example
+hide:
+  - toc
 ---
 
 # Pipeline `((vars))` example

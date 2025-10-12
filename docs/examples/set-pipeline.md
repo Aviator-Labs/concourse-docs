@@ -1,5 +1,7 @@
 ---
 title: Set Pipelines Example
+hide:
+  - toc
 ---
 
 You can set a static set of pipelines from another pipeline on the same team.

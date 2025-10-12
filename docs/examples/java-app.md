@@ -1,5 +1,7 @@
 ---
 title: Java application testing example
+hide:
+  - toc
 ---
 
 You can run the tests for a Java application.

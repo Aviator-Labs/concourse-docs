@@ -1,5 +1,7 @@
 ---
 title: Task inputs and outputs example
+hide:
+  - toc
 ---
 
 A task can pass an artifacts to another task in the same job.

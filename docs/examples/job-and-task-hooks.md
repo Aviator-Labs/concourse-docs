@@ -1,5 +1,7 @@
 ---
 title: Job & task hooks example
+hide:
+  - toc
 ---
 
 Job hooks like [`job.on_success`](https://concourse-ci.org/jobs.html#schema.job.on_success) and Step hooks like [

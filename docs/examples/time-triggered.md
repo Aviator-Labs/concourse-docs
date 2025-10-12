@@ -1,5 +1,7 @@
 ---
 title: time-triggered job example
+hide:
+  - toc
 ---
 
 # `time`-triggered job example

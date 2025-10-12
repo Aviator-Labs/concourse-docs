@@ -1,5 +1,7 @@
 ---
 title: Manually triggered job example
+hide:
+  - toc
 ---
 
 A job can be triggered by a resource. After it's complete, the next job can run automatically or manually.

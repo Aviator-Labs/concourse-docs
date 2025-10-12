@@ -1,5 +1,7 @@
 ---
 title: git-triggered job example
+hide:
+  - toc
 ---
 
 # `git`-triggered job example

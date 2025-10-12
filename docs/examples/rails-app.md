@@ -1,5 +1,7 @@
 ---
 title: Rails application testing example
+hide:
+  - toc
 ---
 
 You can run the tests for a Rails that requires a specific version of ruby and relies on a Postgres database.
