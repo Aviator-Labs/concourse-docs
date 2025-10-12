@@ -304,3 +304,281 @@ func AddSix(i float64) float64 {
 In the next section we'll add a job to publish our app as a release on GitHub.
 
 ## Publishing with Put Steps
+
+We're going to add another job now that will publish our little Go app as
+a [GitHub release](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases) using
+the [GitHub release resource](https://github.com/concourse/github-release-resource/).
+
+This job will need two pieces of information in order to create a GitHub release:
+
+* The git commit to publish as the release
+* What we want the tag to be (e.g. v0.0.1)
+
+The git commit is already represented by the `repo` resource defined in our pipeline. We need to add another resource to
+represent the tag we want to publish.
+
+There are many different ways one could represent the tag value, but since we've already got a git repository setup,
+we'll continue to leverage that.
+
+Let's create a new branch in our `examples` repository called `version`. We'll create a file in there that will contain
+the name of the next tag we want to publish our app under. You can run the following commands to do this:
+
+```shell linenums="1"
+# Make a new, empty branch called "version"
+git switch --orphan version
+# You can make the initial version whatever you want
+echo "v0.0.1" > next-version
+git add next-version
+git commit -m "initial version"
+git push -u origin version
+```
+
+Now we can add this as a resource in our pipeline, so our `resources` look like this:
+
+```yaml linenums="1"
+resources:
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/concourse/examples.git
+      username: <user>
+      password: github_pat_...
+
+  - name: version
+    type: git
+    source:
+      uri: https://github.com/concourse/examples.git
+      username: <user>
+      password: github_pat_...
+      branch: version
+```
+
+Publishing to GitHub is also going to need another resource because it represents something external to Concourse. Let's
+add a third resource that will represent our release on GitHub.
+
+```yaml linenums="1"
+resources:
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/concourse/examples.git
+      username: <user>
+      password: github_pat_...
+
+  - name: version
+    type: git
+    source:
+      uri: https://github.com/concourse/examples.git
+      username: <user>
+      password: github_pat_...
+      branch: version
+
+  - name: release
+    type: github-release
+    source:
+      owner: concourse
+      repository: examples
+      access_token: github_pat_...
+```
+
+Now we can tie these resources together in a job. We'll create a job called `publish` that will:
+
+* Get the last commit that passed the `tests` job.
+* Get the `next-version` file from our `version` branch.
+* Compile our Go app into a binary to publish alongside our release. We'll write a [
+  `task` step](https://concourse-ci.org/task-step.html) to do this.
+* Publish a new GitHub release, uploading the binary, and tagging the commit that last passed `tests`.
+
+Add this job under the `jobs` key in your pipeline:
+
+```yaml linenums="1"
+- name: publish
+  plan:
+    - get: repo
+      passed: [ tests ] # Only use commits that passed the 'tests' job
+    - get: version
+    - task: build-binary
+      config:
+        platform: linux
+        image_resource:
+          type: registry-image
+          source:
+            repository: golang
+            tag: latest
+        inputs:
+          - name: repo
+        outputs: # Declare an output so the put step can upload our binary
+          - name: final-build
+        run:
+          path: sh
+          args:
+            - -c
+            - |
+              output="$(pwd)/final-build"
+              cd repo/apps/golang
+              go build -o "${output}/addsix" .
+    - put: release
+      params:
+        # Comes from the 'get: version' step
+        name: version/next-version
+        tag: version/next-version
+        # Comes from the 'get: repo' step
+        commitish: repo/.git/ref #refer to the git-resource README
+        # Comes from the output of our 'task: build-binary' step
+        globs: final-build/addsix
+```
+
+Here's the entire pipeline put together:
+
+```yaml linenums="1"
+resources:
+  - name: repo
+    type: git
+    source:
+      uri: https://github.com/concourse/examples.git
+      username: <user>
+      password: github_pat_...
+
+  - name: version
+    type: git
+    source:
+      uri: https://github.com/concourse/examples.git
+      username: <user>
+      password: github_pat_...
+      branch: version
+
+  - name: release
+    type: github-release
+    source:
+      owner: concourse
+      repository: examples
+      access_token: github_pat_...
+
+jobs:
+  - name: tests
+    plan:
+      - get: repo
+        trigger: true
+      - task: tests
+        config:
+          platform: linux
+          image_resource: &image #YAML anchor, kind of like a variable
+            type: registry-image
+            source:
+              repository: golang
+              tag: latest
+          inputs:
+            - name: repo
+          run:
+            path: sh
+            args:
+              - -c
+              - |
+                cd repo/apps/golang
+                go test -v .
+
+  - name: publish
+    plan:
+      - get: repo
+        passed: [ tests ]
+      - get: version
+      - task: build-binary
+        config:
+          platform: linux
+          image_resource: *image
+          inputs:
+            - name: repo
+          outputs:
+            - name: final-build
+          run:
+            path: sh
+            args:
+              - -cx
+              - |
+                output="$(pwd)/final-build"
+                cd repo/apps/golang
+                go build -o "${output}/addsix" .
+      - put: release
+        params:
+          name: version/next-version
+          tag: version/next-version
+          commitish: repo/.git/ref
+          globs: [ final-build/addsix ]
+```
+
+Let's update our pipeline:
+
+```shell
+fly -t tutorial set-pipeline --pipeline go-app --config pipeline.yml
+```
+
+The pipeline should look like this in the web UI:
+
+![Resource Publish Job](assets/resource-publish-job.png)
+
+Go ahead and manually trigger the publish job. It should complete successfully and the logs should look similar to this:
+
+![Resource Publish Job Logs](assets/resource-publish-logs.png)
+
+!!! note
+
+    You'll notice that an extra [`get` step](https://concourse-ci.org/get-step.html) snuck in there after 
+    the [`put` step](https://concourse-ci.org/put-step.html) at the end. Concourse does this automatically after 
+    every `put` step because a `put` step has no outputs. So if you ran a `put` step in the middle of your job and 
+    wanted to use whatever you just published/uploaded in a later step, you wouldn't have access to it. Concourse 
+    resolves this by automatically adding and running a `get` step.
+    
+    This extra `get` is not always necessary of course. If you want to have Concourse skip adding this `get` step, 
+    you can set [`no_get`](https://concourse-ci.org/put-step.html#schema.put.no_get) to `true` in the `put` step. 
+    This will save a few seconds off of your builds.
+
+On GitHub, you should see your release published, along with the binary `addsix` attached to the release:
+
+![Resources GitHub Release](assets/github-release.png)
+
+That's the whole pipeline! Congratulations on testing, building, and publishing a silly little Go app with a Concourse
+pipeline 🎉
+
+![Resources Pipeline Done](assets/resource-pipeline-done.png)
+
+## Using External Resource Types
+
+Concourse comes bundled with a lot of resources that are enough for most people to start using Concourse with. However,
+users will want to extend Concourse to work with all sorts of systems and that means bringing your
+own [Resource Types](https://concourse-ci.org/resource-types.html).
+
+Adding a [resource type](https://concourse-ci.org/resource-types.html) to your pipeline looks very similar to adding a
+resource. You can even override the bundled resource types by re-declaring them in your pipeline.
+
+Remember, a resource is a container image. So to pull in a new resource type you need to tell Concourse where to pull
+the image from. This is done by using the
+built-in [registry-image resource](https://github.com/concourse/registry-image-resource/). The process of adding a
+resource type is just like adding a regular resource, just under the top-level `resource_types` key instead.
+
+If you're looking for more resource types, there's a catalog of them
+at [resource-types.concourse-ci.org](https://resource-types.concourse-ci.org/).
+
+## Time For Takeoff ✈️
+
+This brings us to the end of the tutorial. You should have a basic understanding about how to read Concourse pipelines
+and start creating your own. Here are some other parts of the site to help you take off with Concourse:
+
+* [How-To Guides](https://concourse-ci.org/how-to-guides.html) - Contains practical guides
+  for [working with pipelines](https://concourse-ci.org/pipeline-guides.html) and examples of common pipeline workflows,
+  such as [git](https://concourse-ci.org/git-guides.html)
+  and [container](https://concourse-ci.org/container-image-guides.html) workflows.
+* Check out all the reference documentation:
+    * [Jobs](https://concourse-ci.org/jobs.html)
+    * [Tasks](https://concourse-ci.org/tasks.html)
+    * [Resources](https://concourse-ci.org/resources.html)
+    * [Resource Types](https://concourse-ci.org/resource-types.html)
+* [Implement your own resource type](https://concourse-ci.org/implementing-resource-types.html)
+* Find other resources at [resource-types.concourse-ci.org](https://resource-types.concourse-ci.org/) or put
+  `_something_ concourse resource` into your favorite search engine.
+
+Best of luck on your automation journey!
+
+!!! note
+
+    If you have any feedback for this tutorial please share it in this 
+    [GitHub discussion](https://github.com/concourse/concourse/discussions/7353)
