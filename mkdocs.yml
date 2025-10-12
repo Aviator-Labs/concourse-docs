@@ -22,7 +22,7 @@ markdown_extensions:
 
 theme:
   name: material
-  custom_dir: overrides
+  #  custom_dir: overrides
   features:
     - navigation.prune
     - navigation.tabs
@@ -57,7 +57,54 @@ nav:
           - Hello World Pipeline: docs/getting-started/hello-world.md
           - Inputs and Outputs: docs/getting-started/inputs-outputs.md
           - Resources: docs/getting-started/resources.md
-  - Examples: examples/index.md
+      - Install:
+          - docs/install/index.md
+      - Auth & Teams:
+          - docs/auth-and-teams/index.md
+      - The fly CLI:
+          - docs/fly/index.md
+      - Config Basics:
+          - docs/config-basics/index.md
+      - Pipelines:
+          - docs/pipelines/index.md
+      - Vars:
+          - docs/vars/index.md
+      - Resources:
+          - docs/resources/index.md
+      - Resource Types:
+          - docs/resource-types/index.md
+      - Jobs:
+          - docs/jobs/index.md
+      - Steps:
+          - docs/steps/index.md
+      - Tasks:
+          - docs/tasks/index.md
+      - Builds:
+          - docs/builds/index.md
+      - How-To Guides:
+          - docs/how-to/index.md
+      - Operation:
+          - docs/operation/index.md
+      - Observation:
+          - docs/observation/index.md
+      - Internals:
+          - docs/internals/index.md
+  - Examples:
+      - examples/index.md
+      - Hello World pipeline: examples/hello-world.md
+      - Serial job example: examples/serial-job.md
+      - Pipeline ((vars)) example: examples/pipeline-vars.md
+      - Set Pipeline Example: examples/set-pipeline.md
+      - Task inputs and outputs example: examples/inputs-outputs.md
+      - time-triggered job example: examples/time-triggered.md
+      - git-triggered job example: examples/git-triggered.md
+      - Manually triggered job example: examples/manually-triggered.md
+      - Job & task hooks example: examples/job-and-task-hooks.md
+      - Golang library testing example: examples/golang-lib.md
+      - Rails application testing example: examples/rails-app.md
+      - Java application testing example: examples/java-app.md
+      - Nodejs application testing example: examples/nodejs-app.md
+      - PHP application testing example: examples/php-app.md
   - Project: project/index.md
   - Ecosystem: ecosystem/index.md
   - Support: support/index.md
