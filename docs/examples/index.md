@@ -1,5 +1,7 @@
 ---
 title: Examples
+hide:
+  - toc
 ---
 
 Setting up self-contained Concourse [pipelines](https://concourse-ci.org/pipelines.html) is an excellent way to
