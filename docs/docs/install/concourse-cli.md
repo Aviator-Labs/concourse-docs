@@ -16,7 +16,7 @@ concourse/resource-types/... # Linux only
 ```
 
 The Linux release is the largest among all the platforms because it is prepackaged with
-a [bundle of resource types](https://concourse-ci.org/concourse-worker.html#bundled-resource-types) like
+a [bundle of resource types](running-worker.md#bundled-resource-types) like
 the [git](https://github.com/concourse/git-resource), [time](https://github.com/concourse/time-resource/),
 and [registry-image](https://github.com/concourse/registry-image-resource/) resources. Resources only run on Linux
 workers, that's why the other platforms are not bundled with resources; resources don't currently exist for non-linux

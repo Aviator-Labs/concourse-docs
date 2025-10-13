@@ -2,9 +2,8 @@
 title: Install
 ---
 
-A Concourse installation is composed of a [`web` node](https://concourse-ci.org/concourse-web.html), a [
-`worker` node](https://concourse-ci.org/concourse-worker.html), and
-a [PostgreSQL node](https://concourse-ci.org/postgresql-node.html).
+A Concourse installation is composed of a [`web` node](running-web.md), a [`worker` node](running-worker.md), and
+a [PostgreSQL node](running-postgres.md).
 
 There are many ways to deploy Concourse, depending on your personal preference.
 The [Quick Start](../getting-started/quick-start.md) guide shows how to get Concourse up and running quickly via Docker

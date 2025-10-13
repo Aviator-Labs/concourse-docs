@@ -10,7 +10,7 @@ experiment before exploring the more comprehensive documentation.
 Each example presents a pipeline YAML snippet which can be copied to a local file and deployed to your instance via [
 `fly set-pipeline`](https://concourse-ci.org/setting-pipelines.html#fly-set-pipeline). From there you can experiment and
 modify parts of the configuration to better understand how everything works. All configuration options are detailed in
-the [Docs](https://concourse-ci.org/docs.html).
+the [Docs](../docs/index.md).
 
 For a practical real-world example,
 examine [Concourse's own pipeline](https://ci.concourse-ci.org/teams/main/pipelines/concourse) (and

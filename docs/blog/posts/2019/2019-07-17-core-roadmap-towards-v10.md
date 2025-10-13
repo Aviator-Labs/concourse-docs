@@ -5,7 +5,7 @@ categories:
 - roadmap
 ---
 
-_A long-term roadmap for the core design of [Concourse](https://concourse-ci.org), a general-purpose CI/CD tool._
+_A long-term roadmap for the core design of [Concourse](../../../index.md), a general-purpose CI/CD tool._
 
 <!-- more -->
 
@@ -29,7 +29,7 @@ process or just provide feedback, please check them out and submit a PR review! 
 
 ## Table of contents
 
-1. [Where is 'spaces'?](#where-is-spaces-)
+1. [Where is 'spaces'?](#where-is-spaces)
 2. [Where are we now?](#where-are-we-now)
 
 - [Issue #3602: a new algorithm](#issue-3602-a-new-algorithm)
@@ -48,7 +48,7 @@ process or just provide feedback, please check them out and submit a PR review! 
 - [RFC #28: notification resources](#rfc-28-notification-resources)
 
 4. [What comes after all this?](#what-comes-after-all-this)
-5. [Thanks!](#thanks-)
+5. [Thanks!](#thanks)
 
 # Where is 'spaces'?
 
@@ -173,7 +173,7 @@ _Resources v2 is the first major revision of the resource interface since Concou
 very carefully. I think we're finally ready to go._
 
 **UPDATE: Just kidding! This proposal has been superceded by something even more
-general: [Prototypes](/posts/2019-10-15-reinventing-resource-types/)! ([RFC #37](https://github.com/concourse/rfcs/blob/master/037-prototypes/proposal.md))
+general: [Prototypes](2019-10-15-reinventing-resource-types.md)! ([RFC #37](https://github.com/concourse/rfcs/blob/master/037-prototypes/proposal.md))
 **
 
 The v2 interface brings long-awaited polish to the interface: it renames `in` and `out` to `get` and `put` to match

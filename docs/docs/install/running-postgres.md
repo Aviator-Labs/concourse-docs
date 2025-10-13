@@ -3,7 +3,7 @@ title: Running a PostgreSQL Node
 ---
 
 Concourse uses [PostgreSQL](https://www.postgresql.org/) for storing all data and coordinating work in a multi-[
-`web` node](https://concourse-ci.org/concourse-web.html) installation.
+`web` node](running-web.md) installation.
 
 ## Prerequisites
 
@@ -26,9 +26,8 @@ sudo su postgres -c "createdb --owner=$(whoami) atc"
 ```
 
 This will install PostgreSQL (assuming your distro uses `apt`), create a user, and create a database that the current
-UNIX user can access, assuming this same user is going to be running the [
-`web` node](https://concourse-ci.org/concourse-web.html). This is a reasonable default for distros like Ubuntu and
-Debian which default PostgreSQL to `peer` auth.
+UNIX user can access, assuming this same user is going to be running the[`web` node](running-web.md). This is a
+reasonable default for distros like Ubuntu and Debian which default PostgreSQL to `peer` auth.
 
 ## Resource utilization
 

@@ -101,12 +101,12 @@ database.
 
 ### Scaling
 
-The [`web` node](https://concourse-ci.org/concourse-web.html) can be scaled up for high availability. They'll also
+The [`web` node](running-web.md) can be scaled up for high availability. They'll also
 roughly share their scheduling workloads, using the database to synchronize. This is done by just running more `web`
 commands on different machines, and optionally putting them behind a load balancer.
 
-To run a cluster of [`web` nodes](https://concourse-ci.org/concourse-web.html), you'll first need to ensure they're all
-pointing to the same PostgreSQL server.
+To run a cluster of [`web` nodes](running-web.md), you'll first need to ensure they're all pointing to the same
+PostgreSQL server.
 
 Next, you'll need to configure a peer address. This is a DNS or IP address that can be used to reach this `web` node
 from other `web` nodes. Typically this uses a private IP, like so:
@@ -146,7 +146,7 @@ There are some non-configurable connection pools. They take up the following num
 
 The sum of these numbers across all `web` nodes should not be greater than the maximum number of simultaneous
 connections your Postgres server will allow. See [
-`db` node resource utilization](https://concourse-ci.org/postgresql-node.html#db-resource-utilization) for more
+`db` node resource utilization](running-postgres.md#resource-utilization) for more
 information.
 
 For example, if 3 `web` nodes are configured with the values shown above then your PostgreSQL server should be
@@ -154,9 +154,9 @@ configured with a connection limit of at least 201: `(10 + 50 + 5 + 1 + 1) * 3 w
 
 ### Reloading worker authorized key
 
-While [Running `concourse web`](https://concourse-ci.org/concourse-web.html#web-running), the authorized worker key
+While [Running `concourse web`](running-web.md#running-concourse-web), the authorized worker key
 file, which contains all public keys for the workers, is loaded at startup. During the lifecycle of a [
-`web` node](https://concourse-ci.org/concourse-web.html) new `worker` keys might be added or old ones removed. To
+`web` node](running-web.md) new `worker` keys might be added or old ones removed. To
 perform a live reload of this file you can send a `SIGHUP` signal to the `concourse web` process. The process will
 remain running and Concourse will reload the authorized worker key file.
 
@@ -199,7 +199,7 @@ concourse migrate --migrate-db-to-version=1551110547
 ```
 
 This will need the same `CONCOURSE_POSTGRES_*` configuration described in [Running
-`concourse web`](https://concourse-ci.org/concourse-web.html#web-running).
+`concourse web`](running-web.md#running-concourse-web).
 
 Once this completes, switch all `web` nodes back to the older `concourse` binary and you should be good to go.
 

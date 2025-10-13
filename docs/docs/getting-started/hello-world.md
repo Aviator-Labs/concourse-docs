@@ -83,7 +83,7 @@ At this point we are going to pause to explain steps a bit more.
 
 ## What is a step?
 
-A step is a single container running on a [Concourse worker](https://concourse-ci.org/concourse-worker.html).
+A step is a single container running on a [Concourse worker](../install/running-worker.md).
 Each [step](https://concourse-ci.org/steps.html) in a [job plan](https://concourse-ci.org/jobs.html#schema.job.plan)
 runs in its own container. You can run anything you want inside the container (_i.e. run my tests, run this bash script,
 build this image, etc._).
@@ -91,7 +91,7 @@ build this image, etc._).
 So if you have a job with five steps Concourse will create five containers, one for each step. Therefore, we need to
 tell Concourse the following about each step:
 
-- What type of [worker](https://concourse-ci.org/concourse-worker.html) to run the task on (linux/windows/darwin)
+- What type of [worker](../install/running-worker.md) to run the task on (linux/windows/darwin)
 - What container image to use (`Linux only`)
 - What command to run inside the container
 
@@ -104,7 +104,7 @@ tell Concourse the following about each step:
 
 Let's answer the previous three questions for our `hello-world-task`:
 
-- **What type of [worker](https://concourse-ci.org/concourse-worker.html) to run the task on (linux/windows/darwin)**
+- **What type of [worker](../install/running-worker.md) to run the task on (linux/windows/darwin)**
     - Linux, because our docker-composed Concourse only has one linux worker. You can verify this by
       running `fly -t tutorial workers`
 - **What container image to use** (_Linux only_)
