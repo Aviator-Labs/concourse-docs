@@ -93,6 +93,10 @@ nav:
               - Generic OIDC Auth: docs/auth-and-teams/configuring/generic-oidc.md
               - Generic OAuth: docs/auth-and-teams/configuring/generic-oauth.md
               - Generic SAML Auth: docs/auth-and-teams/configuring/generic-saml.md
+          - Managing Teams: docs/auth-and-teams/managing-teams.md
+          - User Roles & Permissions: docs/auth-and-teams/user-roles.md
+          - Pipeline & Build Visibility: docs/auth-and-teams/exposing.md
+          - Security Caveats: docs/auth-and-teams/caveats.md
       - The fly CLI:
           - docs/fly/index.md
       - Config Basics:
