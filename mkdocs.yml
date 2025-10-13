@@ -1,8 +1,8 @@
 site_name: Concourse Docs
-site_url: https://concourse-ci.org/
+site_url: https://aviator-labs.github.io/concourse-docs/
 
-repo_url: https://github.com/kcbimonte/concourse-docs
-repo_name: kbimonte/concourse-docs
+repo_url: https://github.com/Aviator-Labs/concourse-docs
+repo_name: Aviator-Labs/concourse-docs
 
 plugins:
   - search
