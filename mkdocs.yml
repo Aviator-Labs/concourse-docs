@@ -14,7 +14,12 @@ plugins:
 markdown_extensions:
   - admonition
   - tables
+  - attr_list
+  - md_in_html
   - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.superfences
   - pymdownx.highlight:
       anchor_linenums: true
@@ -75,6 +80,19 @@ nav:
           - Upgrading Concourse: docs/install/upgrading-concourse.md
       - Auth & Teams:
           - docs/auth-and-teams/index.md
+          - The main team: docs/auth-and-teams/main-team.md
+          - Configuring Auth:
+              - docs/auth-and-teams/configuring/index.md
+              - Local User Auth: docs/auth-and-teams/configuring/local-user.md
+              - GitHub Auth: docs/auth-and-teams/configuring/github.md
+              - GitLab Auth: docs/auth-and-teams/configuring/gitlab.md
+              - Bitbucket Cloud Auth: docs/auth-and-teams/configuring/bitbucket-cloud.md
+              - CF / UAA Auth: docs/auth-and-teams/configuring/cf-uaa.md
+              - LDAP Auth: docs/auth-and-teams/configuring/ldap.md
+              - Microsoft Auth: docs/auth-and-teams/configuring/microsoft.md
+              - Generic OIDC Auth: docs/auth-and-teams/configuring/generic-oidc.md
+              - Generic OAuth: docs/auth-and-teams/configuring/generic-oauth.md
+              - Generic SAML Auth: docs/auth-and-teams/configuring/generic-saml.md
       - The fly CLI:
           - docs/fly/index.md
       - Config Basics:
