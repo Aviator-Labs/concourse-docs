@@ -42,15 +42,14 @@ your deployment and the amount of traffic it's handling increases, and scale acc
 containers, and volumes. In addition, **all build logs are stored in the database**. This is the primary source of disk
 usage. To mitigate this, log retention can be defined by pipeline authors by using [
 `job.build_log_retention`](https://concourse-ci.org/jobs.html#schema.job.build_log_retention). Concourse operators can
-also configure a default [Build log retention](https://concourse-ci.org/concourse-web.html#build-log-retention) policy
-that applies to all pipelines.
+also configure a default [Build log retention](running-web.md#build-log-retention) policy that applies to all pipelines.
 
 **Bandwidth usage**: well, it's a database, so it most definitely uses the network. Something important to consider here
 is the number of simultaneous connections that the database server itself will allow. Postgres exposes a [
 `max_connections`](https://www.postgresql.org/docs/current/runtime-config-connection.html#GUC-MAX-CONNECTIONS)
 configuration variable, and depending on how many web nodes you are running and the size of
-their [connection pool](https://concourse-ci.org/concourse-web.html#web-connection-pooling), you may need to tune these
-two numbers against each other.
+their [connection pool](running-web.md#database-connection-pooling), you may need to tune these two numbers against each
+other.
 
 **Highly available**: Up to you. Clustered PostgreSQL is kind of new and probably tricky to deploy, but there are
 various cloud solutions for this.
