@@ -66,6 +66,12 @@ nav:
           - Resources: docs/getting-started/resources.md
       - Install:
           - docs/install/index.md
+          - Running a PostgreSQL Node: docs/install/running-postgres.md
+          - The concourse CLI: docs/install/concourse-cli.md
+          - Generating Keys: docs/install/generating-keys.md
+          - Running a web node: docs/install/running-web.md
+          - Running a worker node: docs/install/running-worker.md
+          - Upgrading Concourse: docs/install/upgrading-concourse.md
       - Auth & Teams:
           - docs/auth-and-teams/index.md
       - The fly CLI:
