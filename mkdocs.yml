@@ -12,7 +12,7 @@ plugins:
       post_url_format: "{date}-{slug}"
   - redirects:
       redirect_maps:
-        tasks.md: docs/tasks/index.md
+        tasks.html.md: docs/tasks/index.md
 
 markdown_extensions:
   - admonition
