@@ -53,7 +53,7 @@ fly set-team -n my-team \
     --gitlab-group my-group
 ```
 
-... or via --config for [setting user roles](../managing-teams.md#setting-user-roles):
+... or via `--config` for [setting user roles](../managing-teams.md#setting-user-roles):
 
 ```yaml
 roles:

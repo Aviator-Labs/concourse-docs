@@ -55,7 +55,7 @@ fly set-team -n my-team \
     --github-team my-other-org:my-team
 ```
 
-... or via --config for [setting user roles](../managing-teams.md#setting-user-roles):
+... or via `--config` for [setting user roles](../managing-teams.md#setting-user-roles):
 
 ```yaml
 roles:
