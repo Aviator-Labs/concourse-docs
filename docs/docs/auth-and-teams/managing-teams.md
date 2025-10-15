@@ -68,10 +68,69 @@ roles:
 
 ## `fly active-users`
 
+To list all users that have logged into your instance in the last two months, run:
+
+```shell
+fly -t example active-users
+```
+
+The output will include the username, connector (which method they used to authenticate) and the date of their last
+login.
+
+You can list users whose last login was within a different range by using:
+
+```shell
+fly -t example active-users --since yyyy-MM-dd
+```
+
+This can be helpful to get a sense of how active your cluster is.
+
 ## `fly teams`
+
+To list all the teams, run:
+
+```shell
+fly -t example teams
+```
+
+This can be useful if you've forgotten your team name.
+
+### `fly teams -d`: With Details
+
+To list all the teams with authentication details and members, run:
+
+```shell
+fly -t example teams -d
+```
+
+This can be helpful when debugging OAuth, OIDC groups or listing all individual members.
 
 ## `fly get-team`
 
+To show a team's configuration, run:
+
+```shell
+fly -t example get-team -n some-team
+```
+
 ## `fly rename-team`
 
+To rename a team, run:
+
+```shell
+fly -t example rename-team --old-name my-team --new-name cool-team
+```
+
+This can only be run by the [`main` team](main-team.md).
+
 ## `fly destroy-team`
+
+To remove a team, including all of its pipelines and one-off builds, first log in as the [`main` team](main-team.md),
+and then run:
+
+```shell
+fly -t example destroy-team --team-name my-team
+```
+
+Currently, if there were any workers assigned specifically to this team, they'll be orphaned, without having their
+containers or volumes cleaned up.
