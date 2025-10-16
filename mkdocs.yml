@@ -100,8 +100,7 @@ nav:
           - User Roles & Permissions: docs/auth-and-teams/user-roles.md
           - Pipeline & Build Visibility: docs/auth-and-teams/exposing.md
           - Security Caveats: docs/auth-and-teams/caveats.md
-      - The fly CLI:
-          - docs/fly/index.md
+      - The fly CLI: docs/fly.md
       - Config Basics:
           - docs/config-basics/index.md
       - Pipelines:
