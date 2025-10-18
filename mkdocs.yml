@@ -104,14 +104,14 @@ nav:
       - Config Basics: docs/config-basics.md
       - Pipelines:
           - docs/pipelines/index.md
+          - Setting Pipelines: docs/pipelines/setting-pipelines.md
       - Vars:
           - docs/vars/index.md
       - Resources:
           - docs/resources/index.md
       - Resource Types:
           - docs/resource-types/index.md
-      - Jobs:
-          - docs/jobs/index.md
+      - Jobs: docs/jobs.md
       - Steps:
           - docs/steps/index.md
       - Tasks: docs/tasks.md
