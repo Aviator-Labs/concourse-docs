@@ -1,0 +1,1214 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://aviator-labs.github.io/concourse-docs/blog/2025-04-03-v7130-release-and-project-update/">
+      
+      
+        <link rel="prev" href="../2025-01-06-concourse-2024-in-review/">
+      
+      
+        <link rel="next" href="../2025-05-08-may-2025-project-update/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>v7.13.0 Release and Project Update - Concourse Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#concourse-joins-the-cloud-foundry-foundation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Concourse Docs" class="md-header__button md-logo" aria-label="Concourse Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Concourse Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              v7.13.0 Release and Project Update
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Aviator-Labs/concourse-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Aviator-Labs/concourse-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concourse
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../docs/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Docs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../examples/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Project
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ecosystem/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Ecosystem
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../support/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Support
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Concourse Docs" class="md-nav__button md-logo" aria-label="Concourse Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Concourse Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Aviator-Labs/concourse-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Aviator-Labs/concourse-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Concourse
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../docs/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    Docs
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../examples/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Project
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ecosystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ecosystem
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../archive/2025/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../category/design/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    Categories
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+              <div class="md-post__authors md-typeset">
+                
+                  <div class="md-profile md-post__profile">
+                    <span class="md-author md-author--long">
+                      <img src="https://github.com/taylorsilva.png" alt="Taylor Silva">
+                    </span>
+                    <span class="md-profile__description">
+                      <strong>
+                        
+                          Taylor Silva
+                        
+                      </strong>
+                      <br>
+                      Maintainer
+                    </span>
+                  </div>
+                
+              </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2025-04-03 00:00:00+00:00" class="md-ellipsis">April 3, 2025</time>
+                      </div>
+                    </li>
+                    
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              6 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+
+  
+  
+
+
+<p>First minor release of 2025! This release is FULL of bug fixes, performance improvements, and even a few new features.
+I'll start with a quick project update and then dive into the exciting things you can find in this release.</p>
+<!-- more -->
+
+<h1 id="concourse-joins-the-cloud-foundry-foundation">Concourse Joins the Cloud Foundry Foundation</h1>
+<p>Concourse officially joined the <a href="https://www.cloudfoundry.org/">Cloud Foundry Foundation</a>
+back <a href="https://github.com/cloudfoundry/community/pull/1047">in February</a>. <a href="https://github.com/drich10">Derek Richard</a>
+from Broadcom deserves the credit for making this happen. This was one of those tasks that so many folks have wanted to
+happen over the last few years, but through all the acquisitions (Pivotal -&gt; VMware -&gt; Broadcom) it kept getting started
+and stopped over and over and over. A HUGE thanks to Derek for finally making this happen.</p>
+<p>There are still some small stuff transitioning behind the scenes that Derek is taking care of. You can watch
+our <a href="https://www.youtube.com/watch?v=x2v9xFGH2Rg&amp;list=PLhuMOCWn4P9ji8ZCY2a-FvMeT7S74-Hhm">monthly working group meetings</a>
+for more details or chat with us on <a href="https://discord.gg/MeRxXKW">Discord</a> if you have any questions about this.</p>
+<p>Now let's get into the details about 7.13.0!</p>
+<h1 id="v7130">🎉 v7.13.0</h1>
+<p>Like any release, I recommend reading the <a href="https://github.com/concourse/concourse/releases/tag/v7.13.0">release notes</a>
+for all the details. I'm going to call out some of the big ticket items here though.</p>
+<p>Overall this release is light on new features, but is packed full of bug fixes, optimizations, and upgrades.</p>
+<h1 id="breaking-change-for-pgbouncer-users">Breaking Change for PgBouncer users</h1>
+<p>We've migrated our database driver from <a href="https://github.com/lib/pq">lib/pq</a>
+to <a href="https://github.com/jackc/pgx">jackc/pgx</a>. <code>lib\pq</code> has been in maintenance mode for years now and the majority of
+the Go community now uses <code>pgx</code> as the preferred Postgresql driver.</p>
+<p>This means we had to remove the <code>CONCOURSE_POSTGRES_BINARY_PARAMETERS</code> flag because it was exposing a feature specific
+to <code>lib/pq</code>. As far as I know, this flag was introduced and used by PgBouncer users. There is a similar flag that pgx
+exposes, but based on <a href="https://github.com/jackc/pgx/discussions/1784">recent pgx discussions</a> and
+the <a href="https://www.pgbouncer.org/2025/01/pgbouncer-1.24.0">PgBouncer release notes</a>, it seems there shouldn't be any
+issues for PgBouncer users of Concourse as long as you're using PgBouncer &gt;1.21.0. Concourse has never made any promises
+about compatibility with PgBouncer, but if PgBouncer users have any issues I'll gladly review a PR to improve the
+situation for you folks.</p>
+<p>Thankfully this is the only breaking change and I don't plan to make any new breaking changes outside of a Major version
+bump. The scope of this one seemed quite small which is why I decided to push this out in a Minor version bump.</p>
+<h1 id="new-features">New Features</h1>
+<ul>
+<li><a href="https://github.com/A1kmm">@A1kmm</a> added <code>CONCOURSE_CONTAINERD_PRIVILEGED_MODE</code> to the <code>concourse worker</code> command.
+  This is useful for the security-conscious operator and limits the permissions that privileged containers can get while
+  still allowing tools like Podman and Buildah to work. You can also use this flag to disable the use of privileged
+  containers completely. <a href="https://github.com/concourse/concourse/pull/9017">PR 9017</a></li>
+<li><a href="https://github.com/analytically">@analytically</a> added a <code>background_filter</code> option to the <code>display</code> field, which
+  allows you to specify <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/filter">CSS filters</a> on your pipeline
+  background images. Useful if you're tired of grey backgrounds and want more colour in your pipelines
+  🌈 <a href="https://github.com/concourse/concourse/pull/9117">PR 9117</a></li>
+<li><a href="https://github.com/IvanChalukov">@IvanChalukov</a> added the <code>--team</code> flag to the <code>containers</code> and
+  <code>clear-resource-cache</code> fly commands.
+  PRs <a href="https://github.com/concourse/concourse/pull/9106">9106</a>, <a href="https://github.com/concourse/concourse/pull/9107">9107</a></li>
+</ul>
+<p>Like I said, this release is light on new features. Most of the work went into fixing long-standing bugs and updating
+the code base.</p>
+<h1 id="uuid-collisions">💫 UUID Collisions?!</h1>
+<p>If you search <em>"what are the chances of a UUID collision?"</em> in your preferred search engine, you'll find many comments
+stating <em>"You're more likely to be killed by a gamma ray than get a UUID collision"</em>, usually with a caveat that you're
+generating v4 UUID's. Well, I have <em>another</em> caveat to add to that statement: the library you're using to generate UUID'
+s implements <a href="https://datatracker.ietf.org/doc/html/rfc9562">RFC 9562</a> correctly!</p>
+<p>If you want one reason to upgrade to 7.13.0, I'd say this is why. All versions prior to this release will occasionally
+have UUID collisions when creating containers and volumes. I'm not sure how often this happens, it could be every 1,000
+or 100,000,000, calls to <code>uuid.New()</code>, but it <strong>definitely does happen</strong>. On a low-usage cluster we only saw it once.
+The error we saw was this one:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>container &quot;bba06975-46f6-4bbe-73f5-9e39a869719a&quot;: already exists
+</span></code></pre></div>
+<p>The UUID library we were using was the most popular library at the time. Concourse has been using this library from the
+very beginning. I'm sure it's been the source of a handful of weird "ghost in the machine" type of errors over the
+years. We can now lay this ghost to rest! We are now using the <a href="https://github.com/google/uuid">github.com/google/uuid</a>
+library instead.</p>
+<p><a href="https://github.com/concourse/concourse/pull/9083">PR 9083</a> for full details.</p>
+<h1 id="fly-login-with-chrome">Fly Login With Chrome</h1>
+<p>If you use a Chromium web browser and have tried to <code>fly login</code> you've definitely run into this bug where Chrome says "
+your token could not be sent to fly", but saw that it <em>was</em> sent to fly. What
+gives? <a href="https://developer.chrome.com/blog/private-network-access-preflight/">Preflight requests</a> is what gives! You
+write your web app to send <em>one</em> HTTP request and SURPRISE, Chrome sends a bonus second request first!</p>
+<p>The <code>fly</code> CLI will now handle this ⭐special bonus⭐ preflight request from Chrome, give Chrome the thumbs up, and then
+wait until the real request from Concourse actually comes through. You'll now see a "login successful!" message when you
+<code>fly login</code> now.</p>
+<p><a href="https://github.com/concourse/concourse/pull/9051">PR 9051</a> for full details.</p>
+<p>There is of course another browser bug that's been annoying users for the last few years...</p>
+<h1 id="preserve-existing-browser-session">Preserve Existing Browser Session</h1>
+<p>After you did that janky <code>fly login</code> with Chrome, you'd then run into another issue. You had a tab open and logged into
+Concourse before logging in with <code>fly</code>. Now when you go back to that tab and click around in the UI you get told to
+login AGAIN. What gives?!</p>
+<p><a href="https://github.com/IvanChalukov">@IvanChalukov</a> dove into this issue and fixed it. I can only imagine the amount of
+hours he spent debugging this issue. The TL;DR is that a CSRF token got wrapped in quotes and the quotes were then
+considered part of the token, resulting in an invalid CSRF check server-side. Thank you Ivan for fixing this mild but
+annoying bug. Many browser sessions will now be saved! 🙏</p>
+<p><a href="https://github.com/concourse/concourse/pull/9109">PR 9109</a> for full details.</p>
+<h1 id="everything-else">Everything Else</h1>
+<p>Those are the big bugs that I think most people will be excited to see fixed. There's also been a lot of chore-level
+changes as well. Concourse is quite a big application and has a lot of dependencies. I think we've done a good job of
+dusting things off and upgrading things. Here's a quick rundown of the other exciting things in this release:</p>
+<ul>
+<li>This release is built with <a href="https://go.dev/blog/go1.24">Go 1.24</a>, gaining the performance improvements from that
+  release, which boasts a 2-3% decrease in CPU</li>
+<li><a href="https://github.com/analytically">@analytically</a> upgraded a bunch of stuff in the web frontend:<ul>
+<li>Upgraded Graphviz from v2.47.1 to v12.2.1</li>
+<li>Upgraded D3js from v3.5.5 to v7</li>
+<li>Updated Material Design Icons from v5.0.45 to 7.4.47, adding 2,350 new icons to use in your pipelines!</li>
+<li>Reduced the size of all SVG's using <a href="https://svgo.dev/">svgo</a></li>
+<li>Replaced the unmaintained <a href="https://github.com/NYTimes/gziphandler">NYTimes/gziphandler</a>
+  with <a href="https://github.com/klauspost/compress/">klauspost/compress</a>, giving a performance boost to all HTTP
+  endpoints.</li>
+</ul>
+</li>
+<li><a href="https://github.com/IvanChalukov">@IvanChalukov</a> and <a href="https://github.com/Kump3r">@Kump3r</a> upgraded our fork of Dex to
+  use the CF v3 API, ensuring users of CF Auth aren't locked out of their Concourse when the CF v2 API goes away.</li>
+<li>The experimental warning seen during the <code>set_pipeline</code> step is now gone. It's interface and current behaviour are
+  considered stable.</li>
+<li>Modernization of the Go codebase, mostly removing usage of deprecated Go functions and other similar improvements.
+*
+The <a href="https://github.com/concourse/registry-image-resource">registry-image</a>, <a href="https://github.com/concourse/s3-resource">s3</a>,
+and <a href="https://github.com/concourse/semver-resource">semver</a> resources have been updated to use v2 of the AWS Go SDK.
+While making this change I've also changed the authentication behaviour when these resources are interacting with AWS.
+They will now use the default authentication chain that the AWS SDK uses. This means these resource types can now use
+the Concourse Worker's IAM role and static credentials are no longer required to use these resources.</li>
+<li><a href="https://github.com/mariash">@mariash</a> enabled cgroupv2 support for the Guardian runtime, enabling the use of the
+  Guardian runtime on newer kernel versions.</li>
+<li>I updated Concourse's seccomp profile to include newer syscalls, bringing it inline with the default seccomp profile
+  from Docker and Containerd.</li>
+<li>Shout-out to <a href="https://github.com/aliculPix4D">@aliculPix4D</a> and the folks at Pix4D for testing and finding some last
+  minute critical bugs before the release went out.</li>
+<li>Shout-out to <a href="https://github.com/IvanChalukov">@IvanChalukov</a> and <a href="https://github.com/Kump3r">@Kump3r</a> from SAP for
+  their help testing Concourse on Bosh.</li>
+</ul>
+<p>Again, read the <a href="https://github.com/concourse/concourse/releases/tag/v7.13.0">release notes</a> for everything that's been
+fixed or improved.</p>
+<p>Thank you everyone that contributed to this release. If you find any bugs, open an issue
+on <a href="https://github.com/concourse/concourse/">GitHub</a>.</p>
+<ul>
+<li><a href="https://github.com/concourse/concourse/releases/tag/v7.13.0">GitHub Release</a></li>
+<li><a href="https://hub.docker.com/r/concourse/concourse">Docker Hub Image</a></li>
+<li><a href="https://artifacthub.io/packages/helm/concourse/concourse">Helm Chart</a></li>
+<li><a href="https://bosh.io/releases/github.com/concourse/concourse-bosh-release?all=1">Bosh Release</a></li>
+</ul>
+<h1 id="one-more-thing">🍎 One More Thing...</h1>
+<p>Myself and my co-founders are happy to officially launch <a href="https://centralci.com/">CentralCI</a>, a company providing
+managed Concourse clusters. We run Concourse for you, owning the operational overhead of running Concourse. We've put a
+lot of effort into solving some common pains that operators of Concourse have, allowing you to focus on writing your
+pipelines.</p>
+<p>You can learn more about CentralCI in
+our <a href="https://centralci.com/blog/posts/introducing_centralci">introduction blog post</a>.</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../2025-01-06-concourse-2024-in-review/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Concourse 2024 in Review">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Concourse 2024 in Review
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../2025-05-08-may-2025-project-update/" class="md-footer__link md-footer__link--next" aria-label="Next: May 2025 Project Update">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                May 2025 Project Update
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.prune", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top", "content.code.copy", "attr_list", "md_in_html", "pymdownx.blocks.caption", "navigation.footer"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>

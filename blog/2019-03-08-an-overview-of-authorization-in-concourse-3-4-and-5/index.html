@@ -1,0 +1,1440 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://aviator-labs.github.io/concourse-docs/blog/2019-03-08-an-overview-of-authorization-in-concourse-3-4-and-5/">
+      
+      
+        <link rel="prev" href="../2019-01-25-concourse-update-jan-2125/">
+      
+      
+        <link rel="next" href="../2019-04-01-concourse-update--april-1-2019/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>An Overview of Authorization in Concourse 3, 4 and 5 - Concourse Docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#read-the-docs" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Concourse Docs" class="md-header__button md-logo" aria-label="Concourse Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Concourse Docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              An Overview of Authorization in Concourse 3, 4 and 5
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Aviator-Labs/concourse-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Aviator-Labs/concourse-docs
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Concourse
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../docs/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Docs
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../examples/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Examples
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../project/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Project
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../ecosystem/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Ecosystem
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../support/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Support
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Blog
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Concourse Docs" class="md-nav__button md-logo" aria-label="Concourse Docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Concourse Docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Aviator-Labs/concourse-docs" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Aviator-Labs/concourse-docs
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Concourse
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../docs/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    Docs
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../../examples/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    Examples
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Project
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ecosystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ecosystem
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../support/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Support
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    Blog
+    
+  </span>
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Blog
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../archive/2025/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    Archive
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+    
+    
+      
+        
+        
+      
+    
+    <li class="md-nav__item md-nav__item--pruned md-nav__item--nested">
+      
+        
+  
+  
+  
+    <a href="../category/design/" class="md-nav__link">
+      
+  
+  
+  <span class="md-ellipsis">
+    Categories
+    
+  </span>
+  
+
+      
+        <span class="md-nav__icon md-icon"></span>
+      
+    </a>
+  
+
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#read-the-docs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Read the Docs
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-authorization-works-in-3x" class="md-nav__link">
+    <span class="md-ellipsis">
+      How Authorization Works in 3.x
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concourse-40-users" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concourse 4.0 — Users
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concourse 4.0 — Users">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview-of-authorization-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Overview of Authorization Flow
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#identity-providers" class="md-nav__link">
+    <span class="md-ellipsis">
+      Identity Providers
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Examples
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#debugging-login-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      Debugging Login Problems
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Debugging Login Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-are-the-auth-settings-for-insert-team-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      What are the auth settings for [insert team name]?
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#help-i-logged-in-but-i-cant-see-my-team" class="md-nav__link">
+    <span class="md-ellipsis">
+      Help, I logged in but I can’t see my team
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#i-have-two-identity-servers-how-do-i-add-them-both" class="md-nav__link">
+    <span class="md-ellipsis">
+      I have two Identity servers, how do I add them both?
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#concourse-50-rbac" class="md-nav__link">
+    <span class="md-ellipsis">
+      Concourse 5.0 — RBAC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Concourse 5.0 — RBAC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring-roles-with-fly" class="md-nav__link">
+    <span class="md-ellipsis">
+      Configuring Roles with fly
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#default-behaviour" class="md-nav__link">
+    <span class="md-ellipsis">
+      Default Behaviour
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#specifying-roles-with-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specifying Roles with -c
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inspecting-roles-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Inspecting Roles Configuration
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+  <div class="md-content md-content--post" data-md-component="content">
+    <div class="md-sidebar md-sidebar--post" data-md-component="sidebar" data-md-type="navigation">
+      <div class="md-sidebar__scrollwrap">
+        <div class="md-sidebar__inner md-post">
+          <nav class="md-nav md-nav--primary">
+            <div class="md-post__back">
+              <div class="md-nav__title md-nav__container">
+                <a href="../" class="md-nav__link">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+                  <span class="md-ellipsis">
+                    Back to index
+                  </span>
+                </a>
+              </div>
+            </div>
+            
+            <ul class="md-post__meta md-nav__list">
+              <li class="md-nav__item md-nav__item--section">
+                <div class="md-post__title">
+                  <span class="md-ellipsis">
+                    Metadata
+                  </span>
+                </div>
+                <nav class="md-nav">
+                  <ul class="md-nav__list">
+                    <li class="md-nav__item">
+                      <div class="md-nav__link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 19H5V8h14m-3-7v2H8V1H6v2H5c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2h-1V1m-1 11h-5v5h5z"/></svg>
+                        <time datetime="2019-03-08 00:00:00+00:00" class="md-ellipsis">March 8, 2019</time>
+                      </div>
+                    </li>
+                    
+                    
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 3v15h3V3zm3 2 4 13 3-1-4-13zM5 5v13h3V5zM3 19v2h18v-2z"/></svg>
+                          <span class="md-ellipsis">
+                            in
+                            
+                              <a href="../category/product-update/">product-update</a></span>
+                        </div>
+                      </li>
+                    
+                    
+                      
+                      <li class="md-nav__item">
+                        <div class="md-nav__link">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 20a8 8 0 0 0 8-8 8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8m0-18a10 10 0 0 1 10 10 10 10 0 0 1-10 10C6.47 22 2 17.5 2 12A10 10 0 0 1 12 2m.5 5v5.25l4.5 2.67-.75 1.23L11 13V7z"/></svg>
+                          <span class="md-ellipsis">
+                            
+                              8 min read
+                            
+                          </span>
+                        </div>
+                      </li>
+                    
+                  </ul>
+                </nav>
+              </li>
+            </ul>
+            
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+    <article class="md-content__inner md-typeset">
+      
+        
+  
+
+
+
+  
+  
+
+
+  <h1>An Overview of Authorization in Concourse 3, 4 and 5</h1>
+
+<p>{{&lt; image src="
+/images/downloaded_images/An-Overview-of-Authorization-in-Concourse-3--4-and-5/1-sh1rcJO5eSRDQrmxIF8qTA.jpeg" alt="NASA
+HQ Photo" width="60%" &gt;}}</p>
+<!-- more -->
+
+<p>With the release of <a href="https://concourse-ci.org/download.html#v500">Concourse 5.0.0</a> this week I thought it would be a
+good time to review the evolving implementation of authorization in Concourse. I’ll also be covering some helpful
+debugging information for you to consider when configuring authorization in your own Concourse instance.</p>
+<h2 id="read-the-docs">Read the Docs</h2>
+<p>The revised <a href="https://concourse-ci.org/auth.html">Concourse Auth &amp; Teams docs</a>is a great place to start when diving into
+Concourse 5.0.0. The docs will cover important steps around provider configuration and team configuration for your
+cluster. If you’re more interested in how things used to work compared to how they now work; then read on!</p>
+<h2 id="how-authorization-works-in-3x">How Authorization Works in 3.x</h2>
+<p><em>This section will only be useful to operators who are migrating into 4.x and beyond. Feel free to skip ahead if this
+does not apply to you.</em></p>
+<p>{{&lt; image src="
+/images/downloaded_images/An-Overview-of-Authorization-in-Concourse-3--4-and-5/1-cNIh0ygLLcNnPbGEDOhcig.png" alt=""
+width="100%" &gt;}}</p>
+<p>Every Concourse instance starts with a main team that must be configured against an Authentication Provider on start-up.
+The main team is an admin team, meaning it can create teams, update other teams and view system-scoped details on
+workers, containers, etc.</p>
+<p>One of the tasks that only a main user can do is to create new teams via set-team. When creating the team, the operator
+must specify:</p>
+<ul>
+<li>An Authentication Provider e.g. Basic Auth, GitHub, OAuth</li>
+<li>The relevant configuration of the Authentication Provider e.g. secrets, tokens</li>
+<li>The user/group to authorize (if applicable)</li>
+</ul>
+<p>Some important notes to keep in mind:</p>
+<ul>
+<li>Authentication Provider configurations are attached to an individual team, and not shared across teams. As an
+  operator, you will have to repeat/resupply the Authentication Provider configuration for each team. If Team 1 wanted
+  to change their own auth to add a member or group they would have to ask the Operator for the github API token or
+  bring their own.</li>
+<li>Since Authentication Provider details are provided per-team, operators can set unique provders for each. A common
+  use-case is to provision Team 1 to authenticate against the USA-East-1 OAuth server and Team2 to authentiate against
+  the EMEA OAuth server.</li>
+<li>You can <em>stack</em> Authentication Providers by supplying multiple parameters when applying set-team; e.g. a team can have
+  both GitHub <em>and</em> Basic Auth configured to authenticate users.</li>
+<li>Users who are authorized to access more than one team can only see one team at a time.</li>
+</ul>
+<h2 id="concourse-40-users">Concourse 4.0 — Users</h2>
+<p>Concourse 4 introduced Users and totally revamped the authorization flow:</p>
+<ul>
+<li>Identity providers must be specified when Concourse first starts up (this includes local users as well!)</li>
+<li>Identity providers are shared across teams and can no longer be customized per-team</li>
+<li>Adding/removing Identity Providers require a restart to the web node</li>
+<li>When specifying groups in provider configuration, administrators must use : as the separator instead of /</li>
+<li>Users logging into Concourse are whitelisted into all teams that match thier provider membership. More on this later</li>
+</ul>
+<h3 id="overview-of-authorization-flow">Overview of Authorization Flow</h3>
+<ol>
+<li>Operator determines the Identity Providers they will allow in Concourse and configures their Concourse startup
+   scripts (Docker, BOSH, Helm, etc.) with the necessary parameters as described
+   in <a href="https://concourse-ci.org/install.html#quickstart">Configuring Auth</a>.</li>
+<li>If there are any local users that have Basic Auth (username/password) identities, the operator will add them to the
+   startup scripts as outlined in <a href="https://concourse-ci.org/install.html#local-auth-config">Local Auth</a></li>
+<li>The Operator will start Concourse and begin creating teams using the fly set-team command. Keeping in mind the auth
+   providers that were added in step (1) the Operator can specify the allowed users/groups/teams from that provider.
+   See <a href="https://concourse-ci.org/authentication.html">Configuring Team Auth</a> for more details.</li>
+<li>When a User logs into Concourse, they are asked to login using one of the configured providers from (1).</li>
+<li>Once the User selects a provider, Concourse will redirect the User to the identity provider’s authentication
+   mechanism and wait for a successful login response</li>
+<li>When a login success response is recieved, Concourse will examine all of the teams/orgs the User belongs to under
+   that provider. Concourse will then match the user’s information against the internal list of Concourse teams and
+   their list of whitelisted users/teams/orgs. The resulting list will be the teams that the User can access</li>
+<li>The User is logged into Concourse and can access the teams they were whitelisted into</li>
+</ol>
+<h3 id="identity-providers">Identity Providers</h3>
+<p>An Identity Provider is any external entity that creates, manages and maintains identity information to auth. Concourse
+4 uses the OSS <a href="https://github.com/dexidp/dex">dex library</a> to do most of the heavy lifting.</p>
+<p><strong>Specifying Identity Providers</strong></p>
+<p>You will need to provide the connection details for all the auth connectors you plan to use for teams up front. The full
+list of supported providers and their require parameters can be found on the Concourse docs site
+under <a href="https://concourse-ci.org/install.html#quickstart">Configuring Auth</a>.</p>
+<p><strong>Local Users, The Special Case</strong></p>
+<p>Local Auth users are a bit of a special case because there’s no external auth provider for them, and you can no longer
+“create” them on set-team.</p>
+<p>To add a local user you will need to add that user to the Concourse startup parameter list as described in
+the <a href="https://concourse-ci.org/install.html#local-auth-config">Local Auth</a>docs.</p>
+<p><strong>Whitelisting Users with</strong>  <strong>set-team</strong></p>
+<p>Once you have configured the providers you can freely add users/teams/orgs/groups/whatever to a team. This is as simple
+as using the parameters described in the fly set-team docs
+for <a href="https://concourse-ci.org/authentication.html">Configuring Team Auth</a>.</p>
+<p>As with most fly commands, you can actually attach multiple users/teams across providers to a team. For example: if you
+have GitHub and OAuth providers set up, a team owner could attach two teams (one from GitHub, one from OAuth) to the
+team.</p>
+<h3 id="examples">Examples</h3>
+<p>{{&lt; image src="
+/images/downloaded_images/An-Overview-of-Authorization-in-Concourse-3--4-and-5/1-c4yd3A2DIIrRYF8uqh9_fw.png" width="
+100%" &gt;}}</p>
+<p>In this example we have a simple Concourse installation with two identity providers: GitHub and a single Local User.</p>
+<p>On the left we have two simple GitHub orgs: Pivotal and Concourse. Pivotal has three teams: cloud, billing and admin.
+Concourse has one team. Each team has a single user attached to them.</p>
+<p>On the right we have a map of the Concourse teams and their allowed users/groups.</p>
+<p>Let’s go through a few scenarios to get a good understanding of how auth works in Concourse 4.</p>
+<p><strong>Local User Logs In</strong></p>
+<p>A Concourse user uses the local user provider to login with username:password and only sees Team Local.</p>
+<p><strong>Alice Logs In</strong></p>
+<p>Alice logs into Concourse using the GitHub auth scheme. She finishes the flow and sees..two teams! Because she is a
+member of the Pivotal GitHub org she sees Team All, which is configured to allow all users under the pivotal org on
+GitHub. She also sees Team 1 because it allows all users who are also memebers of pivotal:cloud on GitHub.</p>
+<p><strong>Operator Logs In</strong></p>
+<p>The Operator logs in using GitHub auth and…can see everything! Because the Operator is part of the main team, they can
+see all teams. However, that does <em>not</em> mean the Operator can see all the team pipelines. In this scenario, the Operator
+can only see the Main and Team All team pipelines.</p>
+<p><strong>A non-member logs in</strong></p>
+<p>Jama finds out about this cool Concourse thing and logs into Concourse using the GitHub auth provider. Since he has a
+GitHub account he is able to login successfully. However, once the login flow is completed he is returned to Concourse
+and a blank screen…nothing is available to him! Jama is not a member of a GitHub team/organization that was specified in
+the Concourse team configurations.</p>
+<h2 id="debugging-login-problems">Debugging Login Problems</h2>
+<h3 id="what-are-the-auth-settings-for-insert-team-name">What are the auth settings for [insert team name]?</h3>
+<p>If you are an operator and you need to figure out what the exact auth settings are, you can use the new fly teams
+-dcommand. This will list the teams with details, including the users and groups whitelisted into that team</p>
+<h3 id="help-i-logged-in-but-i-cant-see-my-team">Help, I logged in but I can’t see my team</h3>
+<ol>
+<li>Try using the search function on the dashboard. This is silly but for large Concourse clusters there are a LOT of
+   teams with exposed pipelines and it can be hard to find the team you need</li>
+<li>Logout and Log back in. Due to the implementation of the auth scheme, Users who are already logged into Concourse and
+   are added into a new team must refresh their token by logging out and logging in.
+   Yes, <a href="https://github.com/concourse/concourse/issues/2441">we know it sucks</a>.</li>
+<li>Is the user a member of the org that was specified in set-team? For example, if GitHub team pivotal:foo was used,
+   make sure to ask if the user is a member of that team on GitHub!</li>
+<li>Was there a typo? Use fly set-team -d to look for the team in question and triple-check the spelling of usernames and
+   teams</li>
+<li>
+<p>Did you use the correct separator? Concourse requires all group separators to use : and not /:</p>
+</li>
+<li>
+<p>pivotal:foo is OK</p>
+</li>
+<li>pivotal/foo will fail silently on set-team</li>
+</ol>
+<h3 id="i-have-two-identity-servers-how-do-i-add-them-both">I have two Identity servers, how do I add them both?</h3>
+<p>Unfortunately, that is not possible in Concourse 4. You’ll notice that you can only supply one set of credentials when
+providing auth providers. The side-effect limitation is that a single Concourse installation can’t be connected to more
+than one of the same provider. The operator will have to set up another Concourse if they absolutely must be able to
+connect to two differet identity providers of the same type.</p>
+<h2 id="concourse-50-rbac">Concourse 5.0 — RBAC</h2>
+<p>Concourse 5.0 comes with 4 roles: Concourse Admin, Team Owner, Team Member, and Team Viewer.</p>
+<p><strong>Concourse Admin</strong></p>
+<p>A Concourse Admin is the same as today’s <a href="https://concourse-ci.org/main-team.html">admin user</a>. Members of main team
+will automatically be Concourse Admins* and have the ability to administrate teams with fly: set-team, destroy-team,
+rename-team, and teams. Given that all Concourse Admins must be a member of the main team, all Concourse Admins must
+have at least one other role; and that should typically be the Team Owner role.</p>
+<p><strong>Team Owner</strong></p>
+<p>Team Owners have read, write and auth management capabilities within the scope of their team. For those familiar with
+Concourse today, the scope of allowed actions for a Team Owner is very closely aligned to today’s Concourse team member.
+The new change is that you can no longer rename your own team or destroy your own team as an owner.</p>
+<p><strong>Team Member</strong></p>
+<p>Team Member is a new role that lets users operate within their teams in a read &amp; write fashion; but prevents them from
+changing the auth configurations of their team.</p>
+<p><strong>Team Viewer</strong></p>
+<p>Team Viewer is also a new role that gives users “read-only” access to a team. This locks everything down, preventing
+users from doing a set-pipeline or intercept.</p>
+<p><strong>Full Roles Breakdown</strong></p>
+<p>For a full list of each role’s allowed actions you can reference our handy permission matrix on Google
+Sheets <a href="https://docs.google.com/spreadsheets/d/1np3hyJy3mVRfB2gcgKykz3QTQg5qEj28QgK523SEmao/edit#gid=1437859537">here</a>.</p>
+<h3 id="configuring-roles-with-fly">Configuring Roles with fly</h3>
+<p>Now that we’ve gone over the new roles, we can do a quick overview of how we can go about setting users &amp; roles on
+teams.</p>
+<h3 id="default-behaviour">Default Behaviour</h3>
+<p>By default, if no configuration is provided the user is given the Team Owner role:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>fly<span class="w"> </span>-t<span class="w"> </span>dev<span class="w"> </span>set-team<span class="w"> </span>-n<span class="w"> </span>PowerRangers<span class="w"> </span>--local-user<span class="o">=</span>Zordon
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1">#This behaviour also applies to groups as well, so be careful!</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>fly<span class="w"> </span>-t<span class="w"> </span>dev<span class="w"> </span>set-team<span class="w"> </span>-n<span class="w"> </span>A-Team<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>--github-team<span class="o">=</span>MightyMorphin:PowerRangers
+</span></code></pre></div>
+<h3 id="specifying-roles-with-c">Specifying Roles with <code>-c</code></h3>
+<p>Roles must be specified in a separate configuration file using the -c</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>fly<span class="w"> </span>-t<span class="w"> </span>dev<span class="w"> </span>set-team<span class="w"> </span>-n<span class="w"> </span>A-Team<span class="w"> </span>-c<span class="w"> </span>./team.yml
+</span></code></pre></div>
+<p><code>team.yml</code></p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nt">roles</span><span class="p">:</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">owner</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">local</span><span class="p">:</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="nt">users</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;Zordon&quot;</span><span class="p p-Indicator">]</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">member</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="nt">local</span><span class="p">:</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="nt">users</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;RedRanger&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;BlueRanger&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;GreenRanger&quot;</span><span class="p p-Indicator">]</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">viewer</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="nt">local</span><span class="p">:</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="nt">users</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;Alpha&quot;</span><span class="p p-Indicator">]</span>
+</span></code></pre></div>
+<h2 id="inspecting-roles-configuration">Inspecting Roles Configuration</h2>
+<p>Once you’ve set the team configuration you can verify it using the details flag on fly teams:</p>
+<div class="language-shell-session highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="go">fly -t dev teams -d</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="go">name users groups</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="go">A-Team/member local:RedRanger, BlueRanger, GreenRanger none</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="go">A-Team/owner local:Zordon none</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="go">A-Team/viewer local:Alpha none</span>
+</span></code></pre></div>
+<p>..where you’ll find the output is now updated to list each team/role combination and its associated users/groups.</p>
+<h2 id="further-reading">Further Reading</h2>
+<ul>
+<li><a href="https://medium.com/concourse-ci/oh-auth-f4fe68438171">Oh, Auth by Josh Winters</a></li>
+<li><a href="https://medium.com/concourse-ci/concourse-rbac-preview-8e07616ddc47">Concourse RBAC Preview</a>.</li>
+<li><a href="https://concourse-ci.org/auth.html">Concourse Auth &amp; Teams docs</a></li>
+</ul>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+      
+    </article>
+  </div>
+
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+        
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../2019-01-25-concourse-update-jan-2125/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Concourse Update (Jan 21–25)">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Concourse Update (Jan 21–25)
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../2019-04-01-concourse-update--april-1-2019/" class="md-footer__link md-footer__link--next" aria-label="Next: Concourse Update (🤷-April 1, 2019)">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Concourse Update (🤷-April 1, 2019)
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.prune", "navigation.tabs", "navigation.tabs.sticky", "navigation.indexes", "navigation.top", "content.code.copy", "attr_list", "md_in_html", "pymdownx.blocks.caption", "navigation.footer"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
